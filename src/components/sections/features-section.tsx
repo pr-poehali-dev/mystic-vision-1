@@ -1,77 +1,89 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 
-function TypeTester() {
-  const [scale, setScale] = useState(1)
+function ProgressAnimation() {
+  const [step, setStep] = useState(0)
+  const steps = ["Теория", "Практика", "Сертификат"]
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setScale((prev) => (prev === 1 ? 1.5 : 1))
+      setStep((prev) => (prev + 1) % steps.length)
     }, 2000)
     return () => clearInterval(interval)
   }, [])
 
   return (
-    <div className="flex items-center justify-center h-full">
-      <motion.span
-        className="font-serif text-6xl md:text-8xl text-foreground"
-        animate={{ scale }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      >
-        Aa
-      </motion.span>
+    <div className="flex flex-col items-center justify-center h-full gap-3">
+      {steps.map((s, i) => (
+        <motion.div
+          key={s}
+          className="w-full max-w-[160px] flex items-center gap-3"
+          animate={{ opacity: i <= step ? 1 : 0.3 }}
+          transition={{ duration: 0.5 }}
+        >
+          <motion.div
+            className="w-3 h-3 rounded-full flex-shrink-0"
+            animate={{ backgroundColor: i <= step ? "hsl(var(--primary))" : "hsl(var(--muted))" }}
+            transition={{ duration: 0.5 }}
+          />
+          <span className="text-sm text-foreground">{s}</span>
+        </motion.div>
+      ))}
     </div>
   )
 }
 
-function LayoutAnimation() {
-  const [layout, setLayout] = useState(0)
+function FormatAnimation() {
+  const [active, setActive] = useState(0)
+  const formats = ["Онлайн", "Офлайн", "Гибрид"]
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setLayout((prev) => (prev + 1) % 3)
-    }, 2500)
+      setActive((prev) => (prev + 1) % formats.length)
+    }, 2000)
     return () => clearInterval(interval)
   }, [])
 
-  const layouts = ["grid-cols-2 grid-rows-2", "grid-cols-3 grid-rows-1", "grid-cols-1 grid-rows-3"]
-
   return (
-    <div className="h-full p-4 flex items-center justify-center">
-      <motion.div className={`grid ${layouts[layout]} gap-2 w-full max-w-[140px]`} layout>
-        {[1, 2, 3].map((i) => (
-          <motion.div
-            key={i}
-            className="bg-primary/20 rounded-md min-h-[30px]"
-            layout
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          />
-        ))}
-      </motion.div>
+    <div className="flex flex-col items-center justify-center h-full gap-2">
+      {formats.map((f, i) => (
+        <motion.div
+          key={f}
+          className="px-5 py-2 rounded-full text-sm font-medium"
+          animate={{
+            backgroundColor: i === active ? "hsl(var(--primary))" : "hsl(var(--secondary))",
+            color: i === active ? "hsl(var(--primary-foreground))" : "hsl(var(--muted-foreground))",
+            scale: i === active ? 1.08 : 1,
+          }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {f}
+        </motion.div>
+      ))}
     </div>
   )
 }
 
-function SpeedIndicator() {
-  const [progress, setProgress] = useState(0)
+function CertificateAnimation() {
+  const [show, setShow] = useState(false)
 
   useEffect(() => {
-    const timeout = setTimeout(() => setProgress(100), 500)
-    return () => clearTimeout(timeout)
+    const t = setTimeout(() => setShow(true), 600)
+    return () => clearTimeout(t)
   }, [])
 
   return (
-    <div className="flex flex-col items-center justify-center h-full gap-4">
-      <span className="text-3xl md:text-4xl font-sans font-medium text-foreground">100ms</span>
-      <span className="text-sm text-muted-foreground">Загрузка</span>
-      <div className="w-full max-w-[120px] h-1.5 bg-foreground/10 rounded-full overflow-hidden">
-        <motion.div
-          className="h-full bg-primary rounded-full"
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.1 }}
-        />
-      </div>
+    <div className="flex items-center justify-center h-full">
+      <motion.div
+        className="w-[130px] h-[90px] rounded-lg border-2 border-primary/40 flex flex-col items-center justify-center gap-1 bg-primary/5"
+        initial={{ scale: 0.7, opacity: 0 }}
+        animate={{ scale: show ? 1 : 0.7, opacity: show ? 1 : 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <span className="text-2xl">🏆</span>
+        <span className="text-xs text-foreground font-medium">Сертификат</span>
+        <span className="text-[10px] text-muted-foreground">Международного образца</span>
+      </motion.div>
     </div>
   )
 }
@@ -86,11 +98,11 @@ export function FeaturesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          Возможности
+          Что вас ждёт
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Typography Card */}
+          {/* Program Card */}
           <motion.div
             className="bg-secondary rounded-xl p-8 min-h-[280px] flex flex-col"
             initial={{ opacity: 0, y: 30 }}
@@ -102,15 +114,15 @@ export function FeaturesSection() {
             data-clickable
           >
             <div className="flex-1">
-              <TypeTester />
+              <ProgressAnimation />
             </div>
             <div className="mt-4">
-              <h3 className="font-serif text-xl text-foreground">Типографика</h3>
-              <p className="text-muted-foreground text-sm mt-1">Красивые шрифты, которые идеально масштабируются.</p>
+              <h3 className="font-serif text-xl text-foreground">Чёткая программа</h3>
+              <p className="text-muted-foreground text-sm mt-1">Теория, практика и сертификат — по шагам от простого к сложному.</p>
             </div>
           </motion.div>
 
-          {/* Layouts Card */}
+          {/* Format Card */}
           <motion.div
             className="bg-secondary rounded-xl p-8 min-h-[280px] flex flex-col"
             initial={{ opacity: 0, y: 30 }}
@@ -122,15 +134,15 @@ export function FeaturesSection() {
             data-clickable
           >
             <div className="flex-1">
-              <LayoutAnimation />
+              <FormatAnimation />
             </div>
             <div className="mt-4">
-              <h3 className="font-serif text-xl text-foreground">Макеты</h3>
-              <p className="text-muted-foreground text-sm mt-1">Гибкие сетки, которые адаптируются под контент.</p>
+              <h3 className="font-serif text-xl text-foreground">Удобный формат</h3>
+              <p className="text-muted-foreground text-sm mt-1">Онлайн, офлайн или гибридно — выбирайте, как вам удобно учиться.</p>
             </div>
           </motion.div>
 
-          {/* Speed Card */}
+          {/* Certificate Card */}
           <motion.div
             className="bg-secondary rounded-xl p-8 min-h-[280px] flex flex-col"
             initial={{ opacity: 0, y: 30 }}
@@ -142,11 +154,11 @@ export function FeaturesSection() {
             data-clickable
           >
             <div className="flex-1">
-              <SpeedIndicator />
+              <CertificateAnimation />
             </div>
             <div className="mt-4">
-              <h3 className="font-serif text-xl text-foreground">Скорость</h3>
-              <p className="text-muted-foreground text-sm mt-1">Молниеносная загрузка страниц для ваших гостей.</p>
+              <h3 className="font-serif text-xl text-foreground">Официальный диплом</h3>
+              <p className="text-muted-foreground text-sm mt-1">Сертификат международного образца, который ценят клиенты и салоны.</p>
             </div>
           </motion.div>
         </div>

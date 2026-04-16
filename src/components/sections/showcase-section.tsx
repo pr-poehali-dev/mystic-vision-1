@@ -1,10 +1,22 @@
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 
-const showcaseImages = [
-  "/modern-architecture-building-exterior-minimal.jpg",
-  "/fashion-model-editorial-portrait-dramatic-lighting.jpg",
-  "/interior-design-minimalist-living-room-natural-lig.jpg",
+const showcaseItems = [
+  {
+    src: "/fashion-model-editorial-portrait-dramatic-lighting.jpg",
+    label: "Результат процедуры",
+    caption: "Гладкость и блеск на 4–6 месяцев",
+  },
+  {
+    src: "/fashion-photography-editorial-black-and-white.jpg",
+    label: "Работа выпускника",
+    caption: "Практика на реальных моделях",
+  },
+  {
+    src: "/interior-design-minimalist-living-room-natural-lig.jpg",
+    label: "Учебная студия",
+    caption: "Профессиональное оборудование",
+  },
 ]
 
 export function ShowcaseSection() {
@@ -29,11 +41,11 @@ export function ShowcaseSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          Галерея
+          Работы выпускников
         </motion.p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {showcaseImages.map((src, i) => (
+          {showcaseItems.map((item, i) => (
             <motion.div
               key={i}
               className="relative h-[400px] md:h-[500px] rounded-xl overflow-hidden group"
@@ -49,12 +61,16 @@ export function ShowcaseSection() {
               data-clickable
             >
               <motion.img
-                src={src}
-                alt={`Изображение ${i + 1}`}
+                src={item.src}
+                alt={item.label}
                 className="w-full h-full object-cover"
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <span className="text-white font-serif text-lg">{item.label}</span>
+                <span className="text-white/70 text-sm mt-1">{item.caption}</span>
+              </div>
             </motion.div>
           ))}
         </div>

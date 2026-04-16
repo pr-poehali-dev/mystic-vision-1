@@ -3,37 +3,68 @@ import { Check } from "lucide-react"
 
 const plans = [
   {
-    name: "Старт",
-    price: "1 200",
-    period: " руб/мес",
-    description: "Для личного портфолио",
-    features: ["5 страниц", "Свой домен", "Базовая аналитика", "Поддержка по email"],
+    name: "Базовый",
+    price: "9 900",
+    period: " руб",
+    description: "Для новичков и мастеров, начинающих с кератином",
+    features: [
+      "Теория кератинового выпрямления",
+      "Диагностика и типы волос",
+      "Техника нанесения состава",
+      "Видеоуроки в личном кабинете",
+      "Сертификат о прохождении",
+      "Поддержка куратора 30 дней",
+    ],
   },
   {
-    name: "Про",
-    price: "2 900",
-    period: " руб/мес",
-    description: "Для растущих авторов",
-    features: ["Безлимит страниц", "Приоритет поддержки", "Расширенная аналитика", "Свой брендинг", "Работа в команде"],
+    name: "Профи",
+    price: "19 900",
+    period: " руб",
+    description: "Для опытных мастеров и владельцев салонов",
+    features: [
+      "Всё из Базового тарифа",
+      "Практика на 3 моделях",
+      "Работа с премиум-составами",
+      "Авторская методика преподавателя",
+      "Сертификат международного образца",
+      "Поддержка куратора 90 дней",
+      "Доступ к закрытому клубу мастеров",
+      "Скидка 15% на материалы-партнёры",
+    ],
     popular: true,
+  },
+  {
+    name: "VIP",
+    price: "39 900",
+    period: " руб",
+    description: "Индивидуальное обучение с личным наставником",
+    features: [
+      "Всё из тарифа Профи",
+      "Персональные занятия 1 на 1",
+      "Разбор ваших реальных кейсов",
+      "Помощь с запуском услуги в салоне",
+      "Безлимитная поддержка 6 месяцев",
+      "Готовые скрипты для клиентов",
+    ],
   },
 ]
 
 export function PricingSection() {
   return (
-    <section className="bg-secondary px-6 py-24">
-      <div className="max-w-5xl mx-auto">
+    <section id="pricing" className="bg-secondary px-6 py-24">
+      <div className="max-w-6xl mx-auto">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-5xl font-serif text-foreground">Простые и понятные цены</h2>
-          <p className="text-muted-foreground mt-4 max-w-md mx-auto">Начните бесплатно, платите когда готовы.</p>
+          <p className="text-muted-foreground text-sm uppercase tracking-widest mb-4">Тарифы</p>
+          <h2 className="text-3xl md:text-5xl font-serif text-foreground">Выберите свой уровень</h2>
+          <p className="text-muted-foreground mt-4 max-w-md mx-auto">Возможна рассрочка. Первый платёж — после первого занятия.</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {plans.map((plan, i) => (
             <motion.div
               key={i}
@@ -75,7 +106,7 @@ export function PricingSection() {
                     : "bg-secondary text-foreground hover:bg-accent/30"
                 }`}
               >
-                Начать
+                Записаться
               </button>
             </motion.div>
           ))}

@@ -2,9 +2,9 @@ import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 
 const images = [
-  "/minimal-architecture-portfolio-with-clean-lines.jpg",
+  "/fashion-model-editorial-portrait-dramatic-lighting.jpg",
   "/fashion-photography-editorial-black-and-white.jpg",
-  "/modern-ui-design-portfolio-mockup.jpg",
+  "/interior-design-minimalist-living-room-natural-lig.jpg",
 ]
 
 export function HeroSection() {
@@ -37,7 +37,7 @@ export function HeroSection() {
         >
           <img
             src={images[0] || "/placeholder.svg"}
-            alt="Портфолио 1"
+            alt="Кератиновое выпрямление — результат"
             className="w-full h-full object-cover"
           />
         </motion.div>
@@ -51,7 +51,7 @@ export function HeroSection() {
         >
           <img
             src={images[1] || "/placeholder.svg"}
-            alt="Портфолио 2"
+            alt="Мастер-класс по кератиновому выпрямлению"
             className="w-full h-full object-cover"
           />
         </motion.div>
@@ -65,21 +65,31 @@ export function HeroSection() {
         >
           <img
             src={images[2] || "/placeholder.svg"}
-            alt="Портфолио 3"
+            alt="Обучение кератиновому выпрямлению"
             className="w-full h-full object-cover"
           />
         </motion.div>
       </div>
 
       <motion.div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+        className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10 gap-6"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.8 }}
       >
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif text-center text-foreground mix-blend-difference">
-          Ваши работы, <em className="italic">в фокусе</em>.
+          Кератин: от новичка <em className="italic">до эксперта</em>.
         </h1>
+        <motion.a
+          href="#pricing"
+          className="pointer-events-auto mt-4 bg-foreground text-background px-8 py-4 rounded-full text-sm font-medium hover:bg-foreground/90 transition-colors mix-blend-normal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          data-clickable
+        >
+          Записаться на курс →
+        </motion.a>
       </motion.div>
 
       <motion.div
